@@ -1,0 +1,64 @@
+import React, { useState } from "react";
+import "./App.css";
+import jwtDecode from "jwt-decode";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import register from "./pages/register";
+import Navbar from "./components/Navbar";
+import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import { dark, light } from "./utils/theme";
+import AuthRoute from "./utils/AuthRoute";
+
+// Redux
+import { Provider } from "react-redux";
+import store from "./redux/reducers/store";
+import { SET_AUTHENTICATED } from "./redux/reducers/types";
+import { logout, getUserData } from "./redux/actions/userActions";
+import axios from "axios";
+const token = localStorage.token;
+if (token) {
+  const decodedToken = jwtDecode(token);
+  if (decodedToken.exp * 1000 < Date.now()) {
+    alert("Token has expired..");
+    store.dispatch(logout());
+    window.location.href = "/login";
+  } else {
+    store.dispatch({
+      type: SET_AUTHENTICATED,
+    });
+    axios.defaults.headers.common["Authorization"] = token;
+    store.dispatch(getUserData());
+  }
+}
+function App() {
+  const [darkMode, setDarkMode] = useState(false);
+  const DarkTheme = createMuiTheme(dark);
+  const lightTheme = createMuiTheme(light);
+
+  return (
+    <div className="app">
+      <MuiThemeProvider theme={darkMode ? DarkTheme : lightTheme}>
+        <CssBaseline />
+        <Provider store={store}>
+          <Router>
+            <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+            <Switch>
+              <>
+                <div className="container">
+                  <Route exact path="/" component={Home} />
+                  <AuthRoute exact path="/login" component={Login} />
+                  <AuthRoute exact path="/register" component={register} />
+                </div>
+              </>
+            </Switch>
+          </Router>
+        </Provider>
+      </MuiThemeProvider>
+    </div>
+  );
+}
+
+export default App;
