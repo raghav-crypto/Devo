@@ -63,7 +63,7 @@ function Devos({
   const useStyles = makeStyles((theme) => ({
     card: {
       margin: "auto",
-      width: "100px",
+      width: "100%",
       display: "flex",
       flexDirection: "column",
       marginBottom: "25px",
