@@ -32,18 +32,14 @@ function DeleteDevo({ deleteDevo, devoId }) {
     setOpen(false);
   };
   const useStyles = makeStyles((theme) => ({
-    deleteButton: {
-      position: "absolute",
-      left: "90%",
-      top: '10%'
-    },
+    deleteButton: { position: "absolute", left: "90%" },
   }));
   const classes = useStyles();
   return (
     <>
       <MyButton
-        btnClassName={classes.deleteButton}
         click={handleOpen}
+        tipClassName={classes.deleteButton}
         tip="Delete Devo"
       >
         <DeleteIcon color="secondary" />

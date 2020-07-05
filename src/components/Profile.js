@@ -35,6 +35,7 @@ function Profile({
     const image = e.target.files[0];
     const formData = new FormData();
     formData.append("image", image, image.name);
+    console.log(formData);
     uploadImage(formData);
   };
   const handleEditPicture = () => {

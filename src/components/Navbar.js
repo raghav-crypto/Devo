@@ -22,11 +22,18 @@ function Navbar({ setDarkMode, darkMode, authenticated, history }) {
   const useStyles = makeStyles((theme) => ({
     navColor: {
       background: "linear-gradient(to right, #00B4DB, #0083B0)",
+      color: "#fff",
+      opacity: ".8",
+      padding: ".5rem 2rem",
     },
     darkNav: {
-      background: "#313D4B",
+      background: "#ffa726",
+      color: "#fff",
+      opacity: ".8",
+      padding: ".5rem 2rem",
     },
   }));
+
   const classes = useStyles();
   return (
     <AppBar className={!darkMode ? classes.navColor : classes.darkNav}>
@@ -44,7 +51,6 @@ function Navbar({ setDarkMode, darkMode, authenticated, history }) {
             </MyButton>
             <Switch
               checked={darkMode}
-              color="primary"
               onClick={() => setDarkMode(!darkMode)}
             >
               Flip
@@ -63,7 +69,6 @@ function Navbar({ setDarkMode, darkMode, authenticated, history }) {
             </Button>
             <Switch
               checked={darkMode}
-              color="primary"
               onClick={() => setDarkMode(!darkMode)}
             >
               Flip

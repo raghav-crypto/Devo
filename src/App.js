@@ -11,7 +11,12 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { dark, light } from "./utils/theme";
 import AuthRoute from "./utils/AuthRoute";
-
+import {
+  orange,
+  lightBlue,
+  deepOrange,
+  deepPurple,
+} from "@material-ui/core/colors";
 // Redux
 import { Provider } from "react-redux";
 import store from "./redux/reducers/store";
@@ -35,12 +40,27 @@ if (token) {
 }
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-  const DarkTheme = createMuiTheme(dark);
-  const lightTheme = createMuiTheme(light);
+  // const DarkTheme = createMuiTheme(dark);
+  // const lightTheme = createMuiTheme(light);
 
+  const palletType = darkMode ? "dark" : "light";
+  const mainPrimaryColor = darkMode ? orange[500] : lightBlue[500];
+  const mainSecondaryColor = darkMode ? deepOrange[500] : deepPurple[500];
+  const theme = createMuiTheme({
+    palette: {
+      type: palletType,
+      primary: {
+        main: mainPrimaryColor,
+      },
+      secondary: {
+        main: mainSecondaryColor,
+      },
+    },
+  });
+  // theme={darkMode ? DarkTheme : lightTheme}
   return (
     <div className="app">
-      <MuiThemeProvider theme={darkMode ? DarkTheme : lightTheme}>
+      <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <Provider store={store}>
           <Router>

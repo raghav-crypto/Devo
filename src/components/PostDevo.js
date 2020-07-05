@@ -7,7 +7,7 @@ import MyButton from "../utils/myButton";
 import { loginTheme } from "../pages/theme";
 // MUi
 import makeStyles from "@material-ui/styles/makeStyles";
-import FormHelperText from "@material-ui/core/FormHelperText";
+// import FormHelperText from "@material-ui/core/FormHelperText";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -21,15 +21,23 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 // ICons
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
+// import Image from "@material-ui/icons/Image";
 
 import { postDevo } from "../redux/actions/dataActions";
 
 function PostDevo({ postDevo, loading }) {
   const [open, setOpen] = useState(false);
+  const [image, setImage] = useState(null);
   const [emptyError, setError] = useState(false);
   const [formData, setFormData] = useState({
     body: "",
   });
+  const [data, setData] = useState({
+    error: false,
+    wordCount: "",
+  });
+  const wordLimit = 3;
+  const { wordCount, error } = data;
   const { body } = formData;
   const handleClickOpen = () => {
     setOpen(true);
@@ -41,26 +49,51 @@ function PostDevo({ postDevo, loading }) {
       body: "",
     });
     setError(false);
+    setData({
+      wordCount: "",
+      error: false,
+    });
   };
 
   const useStyles = makeStyles(loginTheme);
   const classes = useStyles();
+
   const onChange = (e) => {
-    if (emptyError) {
+    const wordCount =
+      e.target.value === "" ? 0 : e.target.value.split(" ").length;
+    setData({
+      wordCount: wordCount,
+    });
+    if (emptyError || (error && wordCount < wordLimit)) {
       setError(false);
-      setFormData({ ...body, [e.target.name]: e.target.value });
+      setData({ error: false });
+      setFormData({ ...formData, [e.target.name]: e.target.value });
     } else {
-      setFormData({ ...body, [e.target.name]: e.target.value });
+      if (wordCount < wordLimit) {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+      } else {
+        return setData({ error: true });
+      }
     }
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    if (error) {
+      return alert("Limit Exceded");
+    }
     if (body === "") {
-      setError(true);
+      return setError(true);
     } else {
-      postDevo(formData);
+      postDevo(formData, image);
     }
   };
+  const handleImageChange = (e) => {
+    const image = e.target.files[0];
+    const imageData = new FormData();
+    imageData.append("devoImg", image, image.name);
+    setImage(imageData);
+  };
+
   return (
     <>
       <MyButton click={handleClickOpen} tip="Post a Devo">
@@ -79,21 +112,39 @@ function PostDevo({ postDevo, loading }) {
           <DialogContent>
             <FormControl required fullWidth margin="normal">
               <TextField
-                helperText={emptyError ? "Empty Field..." : null}
+                helperText={
+                  emptyError
+                    ? "Empty Field..."
+                    : error
+                    ? "Devo length exceded..."
+                    : null
+                }
                 name="body"
                 label="Devo"
-                error={emptyError ? true : null}
+                error={emptyError || (error && true)}
                 multiline
                 autoFocus
                 id="body"
                 type="text"
                 rows="3"
-                onChange={(e) => onChange(e)}
+                onChange={(e) => {
+                  onChange(e);
+                }}
               />
             </FormControl>
+            <span>
+              {wordCount}/{wordLimit}
+            </span>
           </DialogContent>
           <DialogActions>
-            <Button fullWidth type="submit" color="primary" type="submit">
+            <input
+              type="file"
+              id="devoImage"
+              onChange={(e) => {
+                handleImageChange(e);
+              }}
+            />
+            <Button fullWidth type="submit" color="primary">
               Submit
               {loading && (
                 <CircularProgress size={30} className={classes.progress} />
@@ -101,6 +152,7 @@ function PostDevo({ postDevo, loading }) {
             </Button>
           </DialogActions>
         </form>
+
         {emptyError ? (
           <Typography color="secondary">
             Must have Something ! Share it...

@@ -2,7 +2,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import PropTypes from "prop-types";
 
 import MyButton from "../utils/myButton";
@@ -10,16 +9,16 @@ import CloseIcon from "@material-ui/icons/Close";
 import UnfoldMore from "@material-ui/icons/UnfoldMore";
 // MUI stuff
 import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
-import Button from "@material-ui/core/Button";
-import FormControl from "@material-ui/core/FormControl";
-import Input from "@material-ui/core/Input";
+// import InputLabel from "@material-ui/core/InputLabel";
+// import Button from "@material-ui/core/Button";
+// import FormControl from "@material-ui/core/FormControl";
+// import Input from "@material-ui/core/Input";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
+// import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
+// import DialogTitle from "@material-ui/core/DialogTitle";
+// import IconButton from "@material-ui/core/IconButton";
+// import Tooltip from "@material-ui/core/Tooltip";
 import Grid from "@material-ui/core/Grid";
 
 // Redux
@@ -45,6 +44,7 @@ function DevoDialog({
     body,
     commentCount,
     devoId,
+    devoImg,
   } = devo;
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -58,6 +58,8 @@ function DevoDialog({
     image: {
       height: 200,
       width: 200,
+      maxWidth: 200,
+      maxHeight: 200,
       borderRadius: "50%",
       objectFit: "cover",
     },
@@ -72,10 +74,6 @@ function DevoDialog({
       position: "absolute",
       left: "87%",
       top: "2%",
-    },
-    expandButton: {
-      position: "absolute",
-      left: "90%",
     },
     spinnerDiv: {
       textAlign: "center",
@@ -102,7 +100,7 @@ function DevoDialog({
   ) : (
     <Grid container>
       <Grid item xs={12} sm={6}>
-        <img src={userImage} className={classes.image} alt="Profile" />
+        <img src={devoImg} className={classes.image} alt="Profile" />
       </Grid>
       <Grid item xs={12} sm={6}>
         <Typography
@@ -122,7 +120,7 @@ function DevoDialog({
         <LikeButton devoId={devoId} />
         <span>{likeCount}</span>
         <MyButton tip="comments">
-          <ChatIcon color='primary' fontSize="small" />
+          <ChatIcon color="primary" fontSize="small" />
         </MyButton>
         <span>{commentCount}</span>
       </Grid>

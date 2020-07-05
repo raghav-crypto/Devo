@@ -1,11 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+* {
+  box-sizing: border-box;
+}
 body {
   font-family: "Roboto", sans-serif;
   background-color: rgb(245, 245, 245);
   overflow-x: hidden;
 }
 .container {
-  margin: 80px auto 0 auto;
+  margin: 100px auto 0 auto;
   max-width: 1200px;
 }
 .nav-container {
@@ -17,4 +21,68 @@ a {
 }
 .nav-container svg {
   color: #ffffff;
+}
+
+.card {
+  margin: auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 25px;
+  border: 0px solid white;
+  border-radius: 10px;
+}
+
+.profile-sidebar {
+  display: flex;
+  padding: 2px;
+}
+.image {
+  border-radius: 50%;
+  max-width: 50px;
+  max-height: 40px;
+}
+
+.profile-name {
+  text-decoration: none;
+  color: black;
+  padding: 0;
+  margin: 0px;
+  margin-left: 12px;
+}
+.date {
+}
+
+.profile-main {
+  display: flex;
+  flex-direction: column;
+}
+.devoImg {
+  margin: auto;
+  border: 1px solid lightblue;
+  max-width: 260px;
+  max-height: 200px;
+  border-radius: 4%;
+}
+.profile-body {
+  margin: 0;
+}
+
+@media (min-width: 621px) {
+  .profile-main {
+    flex-direction: row;
+  }
+  .profile-body {
+    margin: auto;
+    margin-left: 2em;
+  }
+  .devoImg {
+    max-width: 300px;
+    max-height: 300px;
+  }
+  .date {
+    padding-left: 20px;
+  }
 }

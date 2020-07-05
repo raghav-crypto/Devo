@@ -12,6 +12,38 @@ import {
 } from "../reducers/types";
 import axios from "axios";
 
+export const postDevo = (formData, image) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .post("/devos", formData)
+    .then((res) => {
+      const devoId = res.data.devoId;
+      const data = res.data;
+      if (image !== null) {
+        axios
+          .post(`/devos/${devoId}`, image)
+          .then((response) => {
+            console.log(response.data);
+            dispatch({
+              type: POST_DEVO,
+              payload: response.data,
+            });
+            dispatch({ type: CLEAR_ERRORS });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        dispatch({
+          type: POST_DEVO,
+          payload: data,
+        });
+        dispatch({ type: CLEAR_ERRORS });
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
 // get all devos
 export const getDevos = () => (dispatch) => {
   dispatch({
@@ -67,19 +99,6 @@ export const deleteDevo = (devoId) => (dispatch) => {
         type: DELETE_DEVO,
         payload: devoId,
       });
-    })
-    .catch((err) => console.log(err));
-};
-export const postDevo = (body) => (dispatch) => {
-  dispatch({ type: LOADING_UI });
-  axios
-    .post("/devos", body)
-    .then((res) => {
-      dispatch({
-        type: POST_DEVO,
-        payload: res.data,
-      });
-      dispatch({ type: CLEAR_ERRORS });
     })
     .catch((err) => console.log(err));
 };
