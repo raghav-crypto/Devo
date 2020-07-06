@@ -54,6 +54,10 @@ function Devos({
   const useStyles = makeStyles((theme) => ({
     card: {
       margin: "auto",
+<<<<<<< HEAD:src/components/devo/Devos.js
+=======
+      width: "100%",
+>>>>>>> 071b0a278e0610df2e392f0adf8e7783eba1e1e2:src/components/Devos.js
       display: "flex",
       flexDirection: "column",
       marginBottom: "25px",
