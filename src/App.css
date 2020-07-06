@@ -86,3 +86,22 @@ a {
     padding-left: 20px;
   }
 }
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.inputfile + .imagelabel {
+  color: gray;
+  display: inline-block;
+  border: 0px solid white;
+  border-radius: 3px;
+}
+
+.inputfile:focus + .imagelabel,
+.inputfile + .imagelabel:hover {
+  background-color: #eeeeee;
+}

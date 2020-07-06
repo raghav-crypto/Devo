@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import MyButton from "../utils/myButton";
+import MyButton from "../../utils/myButton";
 
-import { loginTheme } from "../pages/theme";
+import { loginTheme } from "../../pages/theme";
 // MUi
 import makeStyles from "@material-ui/styles/makeStyles";
 // import FormHelperText from "@material-ui/core/FormHelperText";
@@ -17,13 +17,13 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import FormControl from "@material-ui/core/FormControl";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
+import IconButton from "@material-ui/core/IconButton";
 // ICons
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
-// import Image from "@material-ui/icons/Image";
+import Image from "@material-ui/icons/Image";
 
-import { postDevo } from "../redux/actions/dataActions";
+import { postDevo } from "../../redux/actions/dataActions";
 
 function PostDevo({ postDevo, loading }) {
   const [open, setOpen] = useState(false);
@@ -36,7 +36,7 @@ function PostDevo({ postDevo, loading }) {
     error: false,
     wordCount: "",
   });
-  const wordLimit = 3;
+  const wordLimit = 50;
   const { wordCount, error } = data;
   const { body } = formData;
   const handleClickOpen = () => {
@@ -114,7 +114,7 @@ function PostDevo({ postDevo, loading }) {
               <TextField
                 helperText={
                   emptyError
-                    ? "Empty Field..."
+                    ? "Must be something..."
                     : error
                     ? "Devo length exceded..."
                     : null
@@ -138,12 +138,17 @@ function PostDevo({ postDevo, loading }) {
           </DialogContent>
           <DialogActions>
             <input
+              className="inputfile"
               type="file"
-              id="devoImage"
+              id="file"
               onChange={(e) => {
                 handleImageChange(e);
               }}
             />
+            <label className="imagelabel" htmlFor="file">
+              Choose Image
+            </label>
+            <Image color="primary" />
             <Button fullWidth type="submit" color="primary">
               Submit
               {loading && (
@@ -152,12 +157,6 @@ function PostDevo({ postDevo, loading }) {
             </Button>
           </DialogActions>
         </form>
-
-        {emptyError ? (
-          <Typography color="secondary">
-            Must have Something ! Share it...
-          </Typography>
-        ) : null}
       </Dialog>
     </>
   );

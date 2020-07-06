@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import EditDetails from "./EditDetails";
-import MyButton from "../utils/myButton";
-import { profileTheme } from "./theme";
+import MyButton from "../../utils/myButton";
+import { profileTheme } from "../theme";
 // MUI stuff
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -19,7 +19,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 //Redux
 import { connect } from "react-redux";
-import { logout, uploadImage } from "../redux/actions/userActions";
+import { logout, uploadImage } from "../../redux/actions/userActions";
 function Profile({
   logout,
   uploadImage,
@@ -52,6 +52,7 @@ function Profile({
           <div className="image-wrapper">
             <img src={imageUrl} className="profile-image" alt="profile" />
             <input
+              className={classes.inputImage}
               type="file"
               id="imageInput"
               hidden="hidden"
@@ -63,7 +64,6 @@ function Profile({
               tip="Edit profile picture"
               btnClassName="button"
               click={handleEditPicture}
-              btn
             >
               <EditIcon color="primary" />
             </MyButton>
@@ -72,7 +72,7 @@ function Profile({
           <div className="profile-details">
             <MuiLink
               component={Link}
-              to={`/users/${handle}`}
+              to={`/user/${handle}`}
               color="primary"
               variant="h5"
             >
@@ -117,14 +117,16 @@ function Profile({
             color="primary"
             component={Link}
             to="/login"
+            style={{ color: "white" }}
           >
             Login
           </Button>
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             component={Link}
             to="/register"
+            style={{ color: "white" }}
           >
             Signup
           </Button>

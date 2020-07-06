@@ -6,6 +6,7 @@ import {
   DELETE_DEVO,
   POST_DEVO,
   SET_DEVO,
+  SUBMIT_COMMENTS,
 } from "../reducers/types";
 const initialState = {
   devos: [],
@@ -56,6 +57,14 @@ export default function (state = initialState, action) {
         ...state,
         devos: [payload, ...state.devos],
         loading: false,
+      };
+    case SUBMIT_COMMENTS:
+      return {
+        ...state,
+        devo: {
+          ...state.devo,
+          comments: [payload, ...state.devo.comments],
+        },
       };
     default:
       return state;

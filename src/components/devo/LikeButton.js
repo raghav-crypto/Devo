@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import MyButton from "../utils/myButton";
+import MyButton from "../../utils/myButton";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import { likeDevo, unlikeDevo } from "../redux/actions/dataActions";
+import { likeDevo, unlikeDevo } from "../../redux/actions/dataActions";
 
 function LikeButton({
   user: { authenticated, likes },
@@ -47,7 +47,6 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 LikeButton.propTypes = {
-  authenticated: PropTypes.bool.isRequired,
   likeDevo: PropTypes.func.isRequired,
   unlikeDevo: PropTypes.func.isRequired,
 };

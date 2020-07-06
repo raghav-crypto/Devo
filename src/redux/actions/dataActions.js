@@ -9,6 +9,8 @@ import {
   POST_DEVO,
   STOP_LOADING,
   SET_DEVO,
+  SUBMIT_COMMENTS,
+  SET_ERRORS,
 } from "../reducers/types";
 import axios from "axios";
 
@@ -23,12 +25,11 @@ export const postDevo = (formData, image) => (dispatch) => {
         axios
           .post(`/devos/${devoId}`, image)
           .then((response) => {
-            console.log(response.data);
             dispatch({
               type: POST_DEVO,
               payload: response.data,
             });
-            dispatch({ type: CLEAR_ERRORS });
+            dispatch(clearErrors());
           })
           .catch((err) => {
             console.log(err);
@@ -38,7 +39,7 @@ export const postDevo = (formData, image) => (dispatch) => {
           type: POST_DEVO,
           payload: data,
         });
-        dispatch({ type: CLEAR_ERRORS });
+        dispatch(clearErrors());
       }
     })
     .catch((err) => console.log(err));
@@ -117,4 +118,43 @@ export const getDevo = (devoId) => (dispatch) => {
       });
     })
     .catch((err) => console.log(err));
+};
+
+// submit comment.
+export const postComment = (devoId, commentData) => (dispatch) => {
+  axios
+    .post(`/devo/comment/${devoId}`, commentData)
+    .then((res) => {
+      dispatch({
+        type: SUBMIT_COMMENTS,
+        payload: res.data,
+      });
+      dispatch(clearErrors());
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
+export const getUserData = (userHandle) => (dispatch) => {
+  dispatch(clearErrors());
+  axios
+    .get(`/user/${userHandle}`)
+    .then((res) => {
+      dispatch({ type: SET_DEVOS, payload: res.data.devos });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: SET_DEVOS,
+        payload: null,
+      });
+    });
+};
+
+export const clearErrors = () => (dispatch) => {
+  dispatch({ type: CLEAR_ERRORS });
 };

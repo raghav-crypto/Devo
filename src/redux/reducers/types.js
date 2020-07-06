@@ -18,3 +18,4 @@ export const UNLIKE_DEVO = "UNLIKE_DEVO";
 export const DELETE_DEVO = "DELETE_DEVO";
 export const POST_DEVO = "POST_DEVO";
 export const SET_DEVO = "SET_DEVO";
+export const SUBMIT_COMMENTS = "SUBMIT_COMMENTS";

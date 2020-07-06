@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import MyButton from "../utils/myButton";
+import MyButton from "../../utils/myButton";
 // MUI stuff
 import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
@@ -13,15 +13,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useEffect } from "react";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
-
 // Icons
 import EditIcon from "@material-ui/icons/Edit";
 
 // Actions
-import { setUserDetails } from "../redux/actions/userActions";
-import { getUserData } from "../redux/actions/userActions";
+import { setUserDetails } from "../../redux/actions/userActions";
+import { getUserData } from "../../redux/actions/userActions";
 function EditDetails({
   user: {
     credentials: { bio: Userbio, website: Userwebsite, location: Userlocation },

@@ -4,35 +4,25 @@ import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import PropTypes from "prop-types";
+
 // Components
 import DeleteDevo from "./DeleteDevo";
-import MyButton from "../utils/myButton";
+import MyButton from "../../utils/myButton";
 import DevoDialog from "./DevoDialog";
+import LikeButton from "./LikeButton";
 // MUI stuff
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-// import CardHeader from "@material-ui/core/CardHeader";
-// import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-// import CardActions from "@material-ui/core/CardActions";
-// import Collapse from "@material-ui/core/Collapse";
-// import Avatar from "@material-ui/core/Avatar";
-// import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-// import { red } from "@material-ui/core/colors";
-// import FavoriteIcon from "@material-ui/icons/Favorite";
-// import ShareIcon from "@material-ui/icons/Share";
-// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-// import MoreVertIcon from "@material-ui/icons/MoreVert";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // MUI Icons
 import ChatIcon from "@material-ui/icons/Chat";
+
 // Redux
 import { connect } from "react-redux";
-import LikeButton from "./LikeButton";
 
-// Action functions
 function Devos({
   devos,
   user: {
@@ -42,6 +32,7 @@ function Devos({
   },
   likeDevo,
   unlikeDevo,
+  openDialog,
 }) {
   dayjs.extend(relativeTime);
   const {
@@ -63,10 +54,10 @@ function Devos({
   const useStyles = makeStyles((theme) => ({
     card: {
       margin: "auto",
-      width: "100px",
       display: "flex",
       flexDirection: "column",
       marginBottom: "25px",
+      width: "100%",
     },
     profileSidebar: {
       display: "flex",
@@ -93,7 +84,11 @@ function Devos({
           flexDirection: "column",
         },
     profileBody: matches
-      ? { margin: "auto", marginLeft: "2em" }
+      ? devoImg
+        ? { margin: "auto", marginLeft: "2em" }
+        : { margin: "0px" }
+      : devoImg
+      ? { margin: "0px", marginTop: "1em" }
       : { margin: "0px" },
     devoImgClass: matches
       ? {
@@ -131,7 +126,7 @@ function Devos({
           color="primary"
           variant="h5"
           component={Link}
-          to={`/users/userHandle`}
+          to={`/user/${userHandle}`}
         >
           {userHandle}
         </Typography>
@@ -142,9 +137,7 @@ function Devos({
           {devoImg ? (
             <img className={classes.devoImgClass} src={devoImg} alt="Devo" />
           ) : null}
-          <Typography color="" className={classes.profileBody}>
-            {body}
-          </Typography>
+          <Typography className={classes.profileBody}>{body}</Typography>
         </div>
         <div className={classes.button}>
           <div>
@@ -156,7 +149,11 @@ function Devos({
             <span>{commentCount}</span>
           </div>
           <div>
-            <DevoDialog devoId={devoId} userHandle={userHandle} />
+            <DevoDialog
+              devoId={devoId}
+              userHandle={userHandle}
+              openDialog={openDialog}
+            />
           </div>
           <div>{deleteButton}</div>
         </div>

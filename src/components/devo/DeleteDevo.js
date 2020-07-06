@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // MUI stuff
-import MyButton from "../utils/myButton";
+import MyButton from "../../utils/myButton";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -16,7 +16,7 @@ import DeleteIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import { connect } from "react-redux";
 
 // Action functions
-import { deleteDevo } from "../redux/actions/dataActions";
+import { deleteDevo } from "../../redux/actions/dataActions";
 import { useState } from "react";
 
 function DeleteDevo({ deleteDevo, devoId }) {

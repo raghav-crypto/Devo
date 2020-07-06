@@ -5,12 +5,12 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import register from "./pages/register";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/layout/Navbar";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import { dark, light } from "./utils/theme";
 import AuthRoute from "./utils/AuthRoute";
+import User from "./pages/User";
 import {
   orange,
   lightBlue,
@@ -40,9 +40,6 @@ if (token) {
 }
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-  // const DarkTheme = createMuiTheme(dark);
-  // const lightTheme = createMuiTheme(light);
-
   const palletType = darkMode ? "dark" : "light";
   const mainPrimaryColor = darkMode ? orange[500] : lightBlue[500];
   const mainSecondaryColor = darkMode ? deepOrange[500] : deepPurple[500];
@@ -57,7 +54,6 @@ function App() {
       },
     },
   });
-  // theme={darkMode ? DarkTheme : lightTheme}
   return (
     <div className="app">
       <MuiThemeProvider theme={theme}>
@@ -71,6 +67,12 @@ function App() {
                   <Route exact path="/" component={Home} />
                   <AuthRoute exact path="/login" component={Login} />
                   <AuthRoute exact path="/register" component={register} />
+                  <Route exact path="/user/:handle" component={User} />
+                  <Route
+                    exact
+                    path="/user/:handle/devo/:devoId"
+                    component={User}
+                  />
                 </div>
               </>
             </Switch>

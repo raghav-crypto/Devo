@@ -5,13 +5,11 @@ import Typography from "@material-ui/core/Typography";
 import { Grid } from "@material-ui/core";
 
 // Components
-import Devos from "../components/Devos";
-import Profile from "../components/Profile";
+import Devos from "../components/devo/Devos";
+import Profile from "../components/profile/Profile";
 
 // Action Functions
 import { getDevos } from "../redux/actions/dataActions";
-import { likeDevo } from "../redux/actions/dataActions";
-import { unlikeDevo } from "../redux/actions/dataActions";
 
 // Redux
 import { connect } from "react-redux";

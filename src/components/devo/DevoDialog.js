@@ -1,40 +1,37 @@
 // Dependencies
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 
-import MyButton from "../utils/myButton";
+// Icons
 import CloseIcon from "@material-ui/icons/Close";
 import UnfoldMore from "@material-ui/icons/UnfoldMore";
+import ChatIcon from "@material-ui/icons/Chat";
 // MUI stuff
 import { makeStyles } from "@material-ui/core/styles";
-// import InputLabel from "@material-ui/core/InputLabel";
-// import Button from "@material-ui/core/Button";
-// import FormControl from "@material-ui/core/FormControl";
-// import Input from "@material-ui/core/Input";
 import Dialog from "@material-ui/core/Dialog";
-// import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-// import DialogTitle from "@material-ui/core/DialogTitle";
-// import IconButton from "@material-ui/core/IconButton";
-// import Tooltip from "@material-ui/core/Tooltip";
 import Grid from "@material-ui/core/Grid";
 
 // Redux
 import { connect } from "react-redux";
-import { getDevo } from "../redux/actions/dataActions";
+import { getDevo } from "../../redux/actions/dataActions";
 import { useState } from "react";
 import { CircularProgress, Typography } from "@material-ui/core";
 
+// Components
+import PostComments from "./PostComments";
 import LikeButton from "./LikeButton";
-import ChatIcon from "@material-ui/icons/Chat";
+import MyButton from "../../utils/myButton";
+import Comments from "./Comments";
 function DevoDialog({
   getDevo,
   devoId: id,
   userHandle: handle,
   devo,
   UI: { loading },
+  openDialog,
 }) {
   const {
     createdAt,
@@ -45,6 +42,7 @@ function DevoDialog({
     commentCount,
     devoId,
     devoImg,
+    comments,
   } = devo;
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -62,6 +60,11 @@ function DevoDialog({
       maxHeight: 200,
       borderRadius: "50%",
       objectFit: "cover",
+    },
+    visibleSeperator: {
+      width: "100%",
+      borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+      marginBottom: "20px",
     },
     invisibleSeperator: {
       border: "none",
@@ -81,27 +84,23 @@ function DevoDialog({
       marginBottom: 50,
     },
   }));
+  useEffect(() => {
+    if (openDialog) {
+      handleClickOpen();
+    }
+  }, []);
   const classes = useStyles();
-  //   <FormControl required fullWidth margin="normal">
-  //     <InputLabel htmlFor="comment">Post comment</InputLabel>
-  //     <Input
-  //       name="comment"
-  //       autoFocus
-  //       margin="dense"
-  //       id="comment"
-  //       type="test"
-  //       fullWidth
-  //     />
-  //   </FormControl>;
   const dialogMarkup = loading ? (
     <div className={classes.spinnerDiv}>
       <CircularProgress size={160} thickness={2} />
     </div>
   ) : (
     <Grid container>
-      <Grid item xs={12} sm={6}>
-        <img src={devoImg} className={classes.image} alt="Profile" />
-      </Grid>
+      {devoImg ? (
+        <Grid item xs={12} sm={6}>
+          <img src={devoImg} className={classes.image} alt="Profile" />
+        </Grid>
+      ) : null}
       <Grid item xs={12} sm={6}>
         <Typography
           color="primary"
@@ -124,6 +123,9 @@ function DevoDialog({
         </MyButton>
         <span>{commentCount}</span>
       </Grid>
+      <hr className={classes.visibleSeperator} />
+      <PostComments devoId={devoId} />
+      <Comments comments={comments} />
     </Grid>
   );
   return (
