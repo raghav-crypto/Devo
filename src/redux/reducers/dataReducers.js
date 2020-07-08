@@ -9,7 +9,7 @@ import {
   SUBMIT_COMMENTS,
 } from "../reducers/types";
 const initialState = {
-  devos: [],
+  devos: null,
   devo: {},
   loading: false,
 };
@@ -41,6 +41,8 @@ export default function (state = initialState, action) {
       );
       state.devos[indx] = payload;
       if (state.devo.devoId === payload.devoId) {
+        const comments = state.devo.comments;
+        payload.comments = comments;
         state.devo = payload;
       }
       return {

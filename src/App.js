@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import jwtDecode from "jwt-decode";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -39,7 +39,23 @@ if (token) {
   }
 }
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const getPrefColorScheme = () => {
+    if (!window.matchMedia) return;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  };
+  const getIntialMode = () => {
+    const isReturningUser = "dark" in localStorage;
+    const savedMode = JSON.parse(localStorage.getItem("dark"));
+    const userPrefersDark = getPrefColorScheme();
+    if (isReturningUser) {
+      return savedMode;
+    } else if (userPrefersDark) return true;
+    else {
+      return false;
+    }
+  };
+
+  const [darkMode, setDarkMode] = useState(getIntialMode());
   const palletType = darkMode ? "dark" : "light";
   const mainPrimaryColor = darkMode ? orange[500] : lightBlue[500];
   const mainSecondaryColor = darkMode ? deepOrange[500] : deepPurple[500];
@@ -54,6 +70,10 @@ function App() {
       },
     },
   });
+
+  useEffect(() => {
+    localStorage.setItem("dark", JSON.stringify(darkMode));
+  }, [darkMode]);
   return (
     <div className="app">
       <MuiThemeProvider theme={theme}>

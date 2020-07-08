@@ -47,6 +47,7 @@ export const postDevo = (formData, image) => (dispatch) => {
 
 // get all devos
 export const getDevos = () => (dispatch) => {
+  dispatch(clearErrors());
   dispatch({
     type: LOADING_DATA,
   });
@@ -71,6 +72,7 @@ export const likeDevo = (devoId) => (dispatch) => {
   axios
     .get(`/devo/${devoId}/like`)
     .then((res) => {
+      console.log(res.data);
       dispatch({
         type: LIKE_DEVO,
         payload: res.data,
@@ -141,10 +143,20 @@ export const postComment = (devoId, commentData) => (dispatch) => {
 
 export const getUserData = (userHandle) => (dispatch) => {
   dispatch(clearErrors());
+  dispatch({
+    type: LOADING_DATA,
+  });
   axios
     .get(`/user/${userHandle}`)
     .then((res) => {
-      dispatch({ type: SET_DEVOS, payload: res.data.devos });
+      if (res.data.devos.length === 0) {
+        dispatch({
+          type: SET_DEVOS,
+          payload: null,
+        });
+      } else {
+        dispatch({ type: SET_DEVOS, payload: res.data.devos });
+      }
     })
     .catch((err) => {
       console.log(err);

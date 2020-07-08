@@ -4,11 +4,18 @@ import { connect } from "react-redux";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import { profileTheme } from "../components/theme";
 
 import Devos from "../components/devo/Devos";
 import StaticProfile from "../components/profile/StaticProfile";
+import DevoSkeleton from "../utils/DevoSkeleton";
+
 import { getUserData } from "../redux/actions/dataActions";
+import { CircularProgress } from "@material-ui/core";
 function User({ getUserData, match, data: { devos, loading } }) {
+  const useStyles = makeStyles(profileTheme);
+  const classes = useStyles();
   const [profile, setProfile] = useState(null);
   const [devoIdParam, setDevoIdParam] = useState(null);
   useEffect(() => {
@@ -23,16 +30,15 @@ function User({ getUserData, match, data: { devos, loading } }) {
       axios
         .get(`/user/${handle}`)
         .then((res) => {
-          console.log(res.data);
           setProfile(res.data.user);
         })
         .catch((err) => console.log(err));
     }
     return () => (mounted = false);
-  }, [getUserData, match.params.handle]);
+  }, [getUserData, match.params.handle, match.params.devoId]);
   const devoMarkup = loading ? (
-    <p>Loading...</p>
-  ) : devos.length === 0 ? (
+    <DevoSkeleton />
+  ) : !devos ? (
     <Typography>No Devos from this User</Typography>
   ) : devoIdParam === null ? (
     devos.map((devo) => <Devos key={devo.devoId} devos={devo} />)
@@ -53,7 +59,9 @@ function User({ getUserData, match, data: { devos, loading } }) {
         </Grid>
         <Grid item sm={4} xs={12}>
           {profile === null ? (
-            <p>Loading Profile</p>
+            <div className={classes.spinnerDiv}>
+              <CircularProgress size={160} thickness={2} />
+            </div>
           ) : (
             <StaticProfile profile={profile} />
           )}

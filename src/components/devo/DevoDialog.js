@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
@@ -37,7 +37,6 @@ function DevoDialog({
     createdAt,
     userHandle,
     likeCount,
-    userImage,
     body,
     commentCount,
     devoId,
@@ -45,11 +44,24 @@ function DevoDialog({
     comments,
   } = devo;
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
+  const [path, setPath] = useState({
+    oldPath: "",
+    newPath: "",
+  });
+  const { oldPath } = path;
+  const handleClickOpen = useCallback(() => {
+    let oldPath = window.location.pathname;
+    const newPath = `/user/${handle}/devo/${id}`;
+    if (oldPath === newPath) {
+      oldPath = `/user/${handle}`;
+    }
+    window.history.pushState(null, null, newPath);
     setOpen(true);
+    setPath({ oldPath, newPath });
     getDevo(id);
-  };
+  }, [getDevo, handle, id]);
   const handleClose = () => {
+    window.history.pushState(null, null, oldPath);
     setOpen(false);
   };
   const useStyles = makeStyles((theme) => ({
@@ -88,7 +100,7 @@ function DevoDialog({
     if (openDialog) {
       handleClickOpen();
     }
-  }, []);
+  }, [handleClickOpen, openDialog]);
   const classes = useStyles();
   const dialogMarkup = loading ? (
     <div className={classes.spinnerDiv}>
@@ -116,7 +128,7 @@ function DevoDialog({
         </Typography>
         <hr className={classes.invisibleSeperator} />
         <Typography variant="body1">{body}</Typography>
-        <LikeButton devoId={devoId} />
+        <LikeButton devoId={id} />
         <span>{likeCount}</span>
         <MyButton tip="comments">
           <ChatIcon color="primary" fontSize="small" />

@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 import MyButton from "../../utils/myButton";
 import PostDevo from "../devo/PostDevo";
+import Notifications from "./Notifications";
 
 //MUI stuff
 import AppBar from "@material-ui/core/AppBar";
@@ -14,26 +15,29 @@ import { makeStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 
 // Icons
-import AddIcon from "@material-ui/icons/Add";
 import HomeIcon from "@material-ui/icons/Home";
-import Notifications from "@material-ui/icons/Notifications";
-
-function Navbar({ setDarkMode, darkMode, authenticated, history }) {
+import Brightness4Icon from "@material-ui/icons/Brightness4";
+function Navbar({
+  setDarkMode,
+  darkMode,
+  authenticated,
+  history,
+  setColorTheme,
+}) {
   const useStyles = makeStyles((theme) => ({
     navColor: {
       background: "linear-gradient(to right, #00B4DB, #0083B0)",
       color: "#fff",
-      opacity: ".8",
-      padding: ".5rem 2rem",
+      // opacity: ".8",
+      // padding: ".5rem 2rem",
     },
     darkNav: {
       background: "#ffa726",
       color: "#fff",
-      opacity: ".8",
-      padding: ".5rem 2rem",
+      // opacity: ".8",
+      // padding: ".5rem 2rem",
     },
   }));
-
   const classes = useStyles();
   return (
     <AppBar className={!darkMode ? classes.navColor : classes.darkNav}>
@@ -46,15 +50,25 @@ function Navbar({ setDarkMode, darkMode, authenticated, history }) {
                 <HomeIcon />
               </MyButton>
             </Link>
-            <MyButton tip="Notifications">
-              <Notifications />
-            </MyButton>
+            <Notifications />
+            {!darkMode && (
+              <span
+                style={{
+                  color: darkMode ? "grey" : "yellow",
+                  fontSize: "30px",
+                }}
+              >
+                ☀︎
+              </span>
+            )}
+            {darkMode && <Brightness4Icon />}
             <Switch
               checked={darkMode}
-              onClick={() => setDarkMode(!darkMode)}
-            >
-              Flip
-            </Switch>
+              onChange={() => setDarkMode((prevMode) => !prevMode)}
+              className="checkbox"
+              id="checkbox"
+              type="checkbox"
+            />
           </>
         ) : (
           <>
@@ -67,12 +81,6 @@ function Navbar({ setDarkMode, darkMode, authenticated, history }) {
             <Button color="inherit" component={Link} to="/register">
               Register
             </Button>
-            <Switch
-              checked={darkMode}
-              onClick={() => setDarkMode(!darkMode)}
-            >
-              Flip
-            </Switch>
           </>
         )}
       </Toolbar>

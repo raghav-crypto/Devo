@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 
 // MUI stuff
-import Typography from "@material-ui/core/Typography";
 import { Grid } from "@material-ui/core";
 
 // Components
 import Devos from "../components/devo/Devos";
 import Profile from "../components/profile/Profile";
+import DevoSkeleton from "../utils/DevoSkeleton";
 
 // Action Functions
 import { getDevos } from "../redux/actions/dataActions";
@@ -21,11 +21,15 @@ function Home({ getDevos, data: { devos, loading } }) {
     }
     return () => (mounted = false);
   }, [getDevos]);
-  let recentDevoMarkup = !loading ? (
-    devos.map((devo) => <Devos key={devo.devoId} devos={devo} />)
-  ) : (
-    <p>Loading...</p>
-  );
+  let recentDevoMarkup =
+    !loading && devos && devos.length === 0 ? (
+      <h1 style={{ textAlign: "center" }}>No Devos Yet !</h1>
+    ) : !loading && devos !== null ? (
+      devos.map((devo) => <Devos key={devo.devoId} devos={devo} />)
+    ) : (
+      <DevoSkeleton />
+    );
+
   return (
     <Grid container spacing={2}>
       <Grid item sm={12} md={8} xs={12}>

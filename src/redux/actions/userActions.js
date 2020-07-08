@@ -5,6 +5,7 @@ import {
   LOADING_UI,
   SET_UNAUTHENTICATED,
   LOADING_USER,
+  MARK_NOTIFICATIONS_READ,
 } from "../reducers/types";
 import axios from "axios";
 
@@ -96,19 +97,33 @@ export const uploadImage = (formData) => (dispatch) => {
 // Set User Details
 export const setUserDetails = (formData) => (dispatch) => {
   dispatch({
-    type: LOADING_USER
-  })
-  axios.post('/user', formData)
-  .then(res => {
-    dispatch(getUserData())
-  }).catch(err => {
-    console.log(err)
-  })
-}
-
+    type: LOADING_USER,
+  });
+  axios
+    .post("/user", formData)
+    .then((res) => {
+      dispatch(getUserData());
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 const setAuthHeader = (authToken) => {
   const token = `Bearer ${authToken}`;
   localStorage.setItem("token", token);
   axios.defaults.headers.common["Authorization"] = token;
+};
+
+// Mark Notifications Read
+
+export const notificationsRead = (notificationId) => (dispatch) => {
+  axios
+    .post("/notifications", notificationId)
+    .then((res) => {
+      dispatch({
+        type: MARK_NOTIFICATIONS_READ,
+      });
+    })
+    .catch((err) => console.log(err));
 };

@@ -44,4 +44,9 @@ export const profileTheme = (theme) => ({
       margin: "20px 10px",
     },
   },
+  spinnerDiv: {
+    textAlign: "center",
+    margin: 50,
+    marginBottom: 50,
+  },
 });

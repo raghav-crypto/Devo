@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import EditDetails from "./EditDetails";
@@ -20,6 +19,7 @@ import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 //Redux
 import { connect } from "react-redux";
 import { logout, uploadImage } from "../../redux/actions/userActions";
+import CircularProgress from "@material-ui/core/CircularProgress";
 function Profile({
   logout,
   uploadImage,
@@ -134,7 +134,9 @@ function Profile({
       </Paper>
     )
   ) : (
-    <p>loading...</p>
+    <div className={classes.spinnerDiv}>
+      <CircularProgress size={120} thickness={2} />
+    </div>
   );
   return profileMarkup;
 }
