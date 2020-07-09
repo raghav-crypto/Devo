@@ -85,7 +85,7 @@ function EditDetails({
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <form onSubmit={(e) => onSubmit(e)}>
+        <form onFirebase Hosting Setup CompleteSubmit={(e) => onSubmit(e)}>
           <DialogTitle id="form-dialog-title">User Details</DialogTitle>
           <DialogContent>
             <FormControl required fullWidth margin="normal">
@@ -116,7 +116,7 @@ function EditDetails({
             </FormControl>
             <FormControl required fullWidth margin="normal">
               {" "}
-              <InputLabel htmlFor="website">Website</InputLabel>
+              <InputLabel htmlFor="website">Website / Github</InputLabel>
               <Input
                 name="website"
                 value={website}

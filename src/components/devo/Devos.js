@@ -45,7 +45,6 @@ function Devos({
     commentCount,
     devoImg,
   } = devos;
-
   const deleteButton =
     authenticated && userHandle === handle ? (
       <DeleteDevo devoId={devoId} />
@@ -64,9 +63,9 @@ function Devos({
       padding: "2px",
     },
     image: {
-      borderRadius: "50%",
       maxWidth: "50px",
-      maxHeigth: "40px",
+      maxHeight: "40px",
+      borderRadius: "2em",
     },
     profileName: {
       padding: "0px",

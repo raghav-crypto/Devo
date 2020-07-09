@@ -23,6 +23,8 @@ import store from "./redux/reducers/store";
 import { SET_AUTHENTICATED } from "./redux/reducers/types";
 import { logout, getUserData } from "./redux/actions/userActions";
 import axios from "axios";
+axios.defaults.baseURL = "https://asia-east2-devo-dc5dc.cloudfunctions.net/api";
+
 const token = localStorage.token;
 if (token) {
   const decodedToken = jwtDecode(token);
