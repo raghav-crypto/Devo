@@ -24,7 +24,6 @@ function EditDetails({
     credentials: { bio: Userbio, website: Userwebsite, location: Userlocation },
   },
   setUserDetails,
-  setFormAlert,
 }) {
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = useState({
@@ -57,10 +56,6 @@ function EditDetails({
       website,
     };
     setUserDetails(userDetails);
-    setFormAlert(true);
-    setTimeout(() => {
-      setFormAlert(false);
-    }, 5000);
   };
 
   useEffect(() => {

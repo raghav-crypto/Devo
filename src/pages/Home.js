@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 // MUI stuff
 import { Grid } from "@material-ui/core";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 // Components
 import Devos from "../components/devo/Devos";
@@ -14,6 +15,7 @@ import { getDevos } from "../redux/actions/dataActions";
 // Redux
 import { connect } from "react-redux";
 function Home({ getDevos, data: { devos, loading } }) {
+  const matches = useMediaQuery("(max-width:958px)");
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(5);
@@ -32,9 +34,11 @@ function Home({ getDevos, data: { devos, loading } }) {
     }
     return () => (mounted = false);
   }, [loading, devos]);
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPage = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPage, indexOfLastPost);
+
   let recentDevoMarkup =
     !loading && devos && devos.length === 0 ? (
       <h1 style={{ textAlign: "center" }}>No Devos Yet !</h1>
@@ -46,7 +50,22 @@ function Home({ getDevos, data: { devos, loading } }) {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  return (
+
+  let markup = matches ? (
+    <Grid container spacing={2}>
+      <Grid item sm={12} md={8} xs={12}>
+        {recentDevoMarkup}
+      </Grid>
+      <Pagination
+        paginate={paginate}
+        postsPerPage={postsPerPage}
+        totalPosts={posts.length}
+      />
+      <Grid item sm={12} md={4} xs={12}>
+        <Profile />
+      </Grid>
+    </Grid>
+  ) : (
     <Grid container spacing={2}>
       <Grid item sm={12} md={8} xs={12}>
         {recentDevoMarkup}
@@ -61,6 +80,8 @@ function Home({ getDevos, data: { devos, loading } }) {
       />
     </Grid>
   );
+
+  return <>{markup}</>;
 }
 const mapStateToProps = (state) => ({
   data: state.data,
