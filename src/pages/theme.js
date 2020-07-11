@@ -2,6 +2,8 @@ export const registerTheme = (theme) => ({
   main: {
     width: "auto",
     display: "block",
+    margin: "100px auto 0 auto",
+    maxWidth: "1200px",
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),
     [theme.breakpoints.up(400 + theme.spacing(3) * 2)]: {
@@ -46,6 +48,8 @@ export const registerTheme = (theme) => ({
 export const loginTheme = (theme) => ({
   main: {
     width: "auto",
+    margin: "100px auto 0 auto",
+    maxWidth: "1200px",
     display: "block",
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),

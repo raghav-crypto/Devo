@@ -17,6 +17,7 @@ import Switch from "@material-ui/core/Switch";
 // Icons
 import HomeIcon from "@material-ui/icons/Home";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
+import Chat from "@material-ui/icons/Chat";
 function Navbar({
   setDarkMode,
   darkMode,
@@ -39,6 +40,7 @@ function Navbar({
     },
   }));
   const classes = useStyles();
+
   return (
     <AppBar className={!darkMode ? classes.navColor : classes.darkNav}>
       <Toolbar className="nav-container">
@@ -51,6 +53,11 @@ function Navbar({
               </MyButton>
             </Link>
             <Notifications />
+            <Link to="/chat">
+              <MyButton tip="Chat">
+                <Chat />
+              </MyButton>
+            </Link>
             {!darkMode && (
               <span
                 style={{

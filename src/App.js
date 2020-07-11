@@ -23,7 +23,13 @@ import store from "./redux/reducers/store";
 import { SET_AUTHENTICATED } from "./redux/reducers/types";
 import { logout, getUserData } from "./redux/actions/userActions";
 import axios from "axios";
+import ChatDashboard from "./Chats/ChatDashboard";
 axios.defaults.baseURL = "https://asia-east2-devo-dc5dc.cloudfunctions.net/api";
+const firebase = require("firebase");
+require("dotenv").config();
+require("firebase/firestore");
+
+firebase.initializeApp({ your_firbase_config });
 
 const token = localStorage.token;
 if (token) {
@@ -56,7 +62,6 @@ function App() {
       return false;
     }
   };
-
   const [darkMode, setDarkMode] = useState(getIntialMode());
   const palletType = darkMode ? "dark" : "light";
   const mainPrimaryColor = darkMode ? orange[500] : lightBlue[500];
@@ -96,6 +101,7 @@ function App() {
                     component={User}
                   />
                 </div>
+                <Route exact path="/chat" component={ChatDashboard} />
               </>
             </Switch>
           </Router>

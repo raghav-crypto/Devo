@@ -52,7 +52,7 @@ function User({ getUserData, match, data: { devos, loading } }) {
     })
   );
   return (
-    <div>
+    <div style={{ margin: "100px auto 0 auto", maxWidth: "1200px" }}>
       <Grid container spacing={2}>
         <Grid item sm={8} xs={12}>
           {devoMarkup}

@@ -75,17 +75,17 @@ function EditDetails({
     <>
       <MyButton
         click={handleClickOpen}
-        style={{ float: "right" }}
         tip="Edit Profile"
+        style={{ float: "right" }}
       >
         <EditIcon color="primary" />
-      </MyButton>{" "}
+      </MyButton>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <form onFirebase Hosting Setup CompleteSubmit={(e) => onSubmit(e)}>
+        <form onSubmit={(e) => onSubmit(e)}>
           <DialogTitle id="form-dialog-title">User Details</DialogTitle>
           <DialogContent>
             <FormControl required fullWidth margin="normal">

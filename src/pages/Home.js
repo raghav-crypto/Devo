@@ -52,33 +52,37 @@ function Home({ getDevos, data: { devos, loading } }) {
   };
 
   let markup = matches ? (
-    <Grid container spacing={2}>
-      <Grid item sm={12} md={8} xs={12}>
-        {recentDevoMarkup}
+    <div className="main">
+      <Grid container spacing={2}>
+        <Grid item sm={12} md={8} xs={12}>
+          {recentDevoMarkup}
+        </Grid>
+        <Pagination
+          paginate={paginate}
+          postsPerPage={postsPerPage}
+          totalPosts={posts.length}
+        />
+        <Grid item sm={12} md={4} xs={12}>
+          <Profile />
+        </Grid>
       </Grid>
-      <Pagination
-        paginate={paginate}
-        postsPerPage={postsPerPage}
-        totalPosts={posts.length}
-      />
-      <Grid item sm={12} md={4} xs={12}>
-        <Profile />
-      </Grid>
-    </Grid>
+    </div>
   ) : (
-    <Grid container spacing={2}>
-      <Grid item sm={12} md={8} xs={12}>
-        {recentDevoMarkup}
+    <div className="main">
+      <Grid container spacing={2}>
+        <Grid item sm={12} md={8} xs={12}>
+          {recentDevoMarkup}
+        </Grid>
+        <Grid item sm={12} md={4} xs={12}>
+          <Profile />
+        </Grid>
+        <Pagination
+          paginate={paginate}
+          postsPerPage={postsPerPage}
+          totalPosts={posts.length}
+        />
       </Grid>
-      <Grid item sm={12} md={4} xs={12}>
-        <Profile />
-      </Grid>
-      <Pagination
-        paginate={paginate}
-        postsPerPage={postsPerPage}
-        totalPosts={posts.length}
-      />
-    </Grid>
+    </div>
   );
 
   return <>{markup}</>;
