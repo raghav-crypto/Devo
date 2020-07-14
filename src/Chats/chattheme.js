@@ -98,15 +98,12 @@ export const theme = (theme) => ({
     width: "100%",
     position: "absolute",
   },
-  chatTextBoxContainer: {
+  chatTextBox: {
+    padding: "1em",
     position: "absolute",
     bottom: "-2px",
     boxSizing: "border-box",
     overflow: "auto",
     width: "100%",
-  },
-
-  chatTextBox: {
-    width: "calc(100% - 25px)",
   },
 });

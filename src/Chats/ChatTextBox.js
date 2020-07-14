@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { TextField, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import { theme } from "./chattheme";
+import clsx from "clsx";
 const ChatTextBox = ({ submitMessageFn, messageRead, open }) => {
   const useStyles = makeStyles(theme);
   const classes = useStyles();
@@ -23,19 +24,25 @@ const ChatTextBox = ({ submitMessageFn, messageRead, open }) => {
     }
   };
   return (
-    <div className={classes.chatTextBoxContainer}>
-      <div style={{ padding: "1em", backgroundColor: "inherit" }}>
-        <TextField
-          placeholder="Say Something"
-          onKeyUp={(e) => userTyping(e)}
-          id="chatText-box"
-          className={classes.chatTextBox}
-          onFocus={() => {
-            userClicked();
-          }}
-        />
-      </div>
-    </div>
+    // <TextField
+    //   placeholder="Say Something"
+    //   onKeyUp={(e) => userTyping(e)}
+    //   id="chatText-box"
+    //   className={classes.chatTextBox}
+    //   onFocus={() => {
+    //     userClicked();
+    //   }}
+    // />
+    <input
+      type="text"
+      placeholder="Say Something"
+      onKeyUp={(e) => userTyping(e)}
+      id="chatText-box"
+      className={clsx(classes.chatTextBox, "chat-input")}
+      onFocus={() => {
+        userClicked();
+      }}
+    />
   );
 };
 

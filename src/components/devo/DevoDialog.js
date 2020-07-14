@@ -118,7 +118,7 @@ function DevoDialog({
           color="primary"
           component={Link}
           variant="h5"
-          to={`/users/${userHandle}`}
+          to={`/user/${userHandle}`}
         >
           @{userHandle}
         </Typography>
@@ -136,7 +136,9 @@ function DevoDialog({
         <span>{commentCount}</span>
       </Grid>
       <hr className={classes.visibleSeperator} />
-      <PostComments devoId={devoId} />
+      <div style={{ width: "100%" }}>
+        <PostComments devoId={devoId} />
+      </div>
       <Comments comments={comments} />
     </Grid>
   );

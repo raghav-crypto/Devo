@@ -26,10 +26,9 @@ import axios from "axios";
 import ChatDashboard from "./Chats/ChatDashboard";
 axios.defaults.baseURL = "https://asia-east2-devo-dc5dc.cloudfunctions.net/api";
 const firebase = require("firebase");
-require("dotenv").config();
 require("firebase/firestore");
 
-firebase.initializeApp({ your_firbase_config });
+firebase.initializeApp({ firebaseConfig });
 
 const token = localStorage.token;
 if (token) {

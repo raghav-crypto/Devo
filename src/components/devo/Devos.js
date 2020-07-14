@@ -62,10 +62,15 @@ function Devos({
       display: "flex",
       padding: "2px",
     },
+    // imageWrapper: {
+    //   width: '50px',
+    //   height: '50px',
+    // },
     image: {
-      maxWidth: "50px",
-      maxHeight: "40px",
-      borderRadius: "2em",
+      verticalAlign: "middle",
+      width: "50px",
+      height: "50px",
+      borderRadius: "50%",
     },
     profileName: {
       padding: "0px",
@@ -117,7 +122,7 @@ function Devos({
   return (
     <Card className={classes.card}>
       <div className={classes.profileSidebar}>
-        <Link to={`/user/${userHandle}`}>
+        <Link className="imageWrapper" to={`/user/${userHandle}`}>
           <img className={classes.image} src={userImage} alt="" />
         </Link>
         <Typography

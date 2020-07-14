@@ -18,7 +18,7 @@ function Comments({ comments }) {
       margin: 4,
     },
     commentImage: {
-      maxWidth: "100%",
+      width: "100px",
       height: "100px",
       objectFit: "cover",
       borderRadius: "50%",
